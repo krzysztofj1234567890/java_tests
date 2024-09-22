@@ -1,5 +1,7 @@
 package com.example.kj;
 
+import java.time.LocalDate;
+
 /**
  * TASK: 
  * implement a simulated Car Rental system using object-oriented principles. 
@@ -11,10 +13,19 @@ package com.example.kj;
     6. Use unit tests to prove the system satisfies the requirements. 
     7. Please be prepared to discuss the design and implementation during the interview.
  */
-public class App 
-{
-    public static void main( String[] args )
-    {
-        System.out.println( "Hello World!" );
+public class App {
+    public static void main( String[] args ) {
+        System.out.println( "START!" );
+        
+        // Create rental office and add cars to it
+        CarRentalOffice office = new CarRentalOffice() ;
+        office.addCar( CarFactory.createSedan(1, "AWS-001" ) ) ;
+
+        // Create person
+        Person person = new Person( 1, "John") ;
+
+        // Person makes reservation
+        office.makeReservation(person.getPersonId(), Car.CarType.SEDAN, LocalDate.parse("2024-10-04"), LocalDate.parse("2024-10-14"));
+
     }
 }

@@ -1,7 +1,7 @@
-import com.example.kj.Car;
+package com.example.kj;
 
-public class CarCreator {
-    public Car createSedan( long carId, String registration ) {
+public class CarFactory {
+    public static Car createSedan( long carId, String registration ) {
         return new Car( carId, registration, Car.CarType.SEDAN ) ;
     }
 }

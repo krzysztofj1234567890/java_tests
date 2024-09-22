@@ -3,7 +3,7 @@ public class Car {
     // different car types
     public enum CarType{ SEDAN, SUV, VAN } ;
 
-    private long carId ;
+    private Long carId ;
     private String registration ;
     private CarType type ;
 
@@ -11,6 +11,14 @@ public class Car {
         this.carId = carId ;
         this.registration = registration ;
         this.type = type ;
+    }
+
+    public boolean isSedan() {
+        if ( this.type == CarType.SEDAN ) return true ;
+        else return false ;
+    }
+    public String getRegistration() {
+        return this.registration ;
     }
 
 }
