@@ -12,19 +12,26 @@ public class CarRentalOffice {
     private List<CarAvailability> allCarsAvailability = new ArrayList<CarAvailability>() ;
     private Map<Long, Car> reservations = new HashMap<Long, Car> () ;
 
+    /**
+     * Add car managed by the office
+     * @param car
+     */
     public void addCar( Car car ) {
         LocalDate from = LocalDate.now() ;
         LocalDate to = from.plusDays(365);
 
+        // make this car available for next 365 days
         this.allCarsAvailability.add( new CarAvailability( car, from, to ) ) ;
     }
+
     /**
-     * Make a reservation for a given car type and date fro..to
+     * Make a car reservation
      * @param personId
-     * @param car
-     * @param from
-     * @param to
-     * @return true of reservation is success
+     * @param carType
+     * @param fromDate
+     * @param fromTime
+     * @param numberOfDays
+     * @return
      */
     public boolean makeReservation( Long personId, CarType carType, LocalDate fromDate, long fromTime, int numberOfDays ) {
         // check if the person alreeady has a reservation
