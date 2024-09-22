@@ -13,12 +13,15 @@ public class Car {
         this.type = type ;
     }
 
-    public boolean isSedan() {
-        if ( this.type == CarType.SEDAN ) return true ;
-        else return false ;
+    public Long getCarId() {
+        return this.carId ;
     }
     public String getRegistration() {
         return this.registration ;
+    }
+
+    public CarType getType() {
+        return type;
     }
 
 }

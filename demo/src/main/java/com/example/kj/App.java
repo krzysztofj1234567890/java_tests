@@ -25,7 +25,11 @@ public class App {
         Person person = new Person( 1, "John") ;
 
         // Person makes reservation
-        office.makeReservation(person.getPersonId(), Car.CarType.SEDAN, LocalDate.parse("2024-10-04"), LocalDate.parse("2024-10-14"));
+        office.makeReservation(person.getPersonId(), Car.CarType.SEDAN, LocalDate.parse("2024-10-04"), 10, 5 );
 
+        // Person rents a car
+        Car car = office.rentACar(person.getPersonId() ) ;
+
+        System.out.println( String.format( "rented car type:%s registration:%s", car.getType(), car.getRegistration() )) ;
     }
 }

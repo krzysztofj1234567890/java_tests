@@ -7,21 +7,16 @@ import java.time.format.DateTimeFormatter;
 import java.util.* ;
 
 public class CarRentalOffice {
-    private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd LLLL yyyy");
+    private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
-    private OrderedMap<String,
+    private List<CarAvailability> allCarsAvailability = new ArrayList<CarAvailability>() ;
+    private Map<Long, Car> reservations = new HashMap<Long, Car> () ;
 
-    private Map<String, Car> sedanMap = new HashMap<String, Car>() ;
-    private Map<Long, CarType> reservations = new HashMap<Long, CarType> () ;
-    private Map<String, Integer> dayCarMap = new HashMap<String, Integer>() ;
-    private int sedanCounter = 0 ;
+    public void addCar( Car car ) {
+        LocalDate from = LocalDate.now() ;
+        LocalDate to = from.plusDays(365);
 
-    public CarRentalOffice addCar( Car car ) {
-        if ( car.isSedan() ) { 
-            this.sedanMap.put( car.getRegistration(), car ) ;
-            this.sedanCounter ++ ;
-        }
-        return this ;
+        this.allCarsAvailability.add( new CarAvailability( car, from, to ) ) ;
     }
     /**
      * Make a reservation for a given car type and date fro..to
@@ -31,33 +26,41 @@ public class CarRentalOffice {
      * @param to
      * @return true of reservation is success
      */
-    public boolean makeReservation( Long personId, CarType type, LocalDate fromDate, long fromTime, int numberOfDays ) {
+    public boolean makeReservation( Long personId, CarType carType, LocalDate fromDate, long fromTime, int numberOfDays ) {
         // check if the person alreeady has a reservation
         if ( reservations.containsKey( personId ) ) return false ;
 
         // can I make the reservation = find a car that is not reserved for this time period
+        // Normally this would be a SQL query, but I am not using a database so I just implement it
+        boolean result = false ;
+        LocalDate toDate = fromDate.plusDays(numberOfDays) ;
+        for( CarAvailability availability : this.allCarsAvailability ) {
+            if ( availability.isAvailable(carType, fromDate, toDate)) {
 
-        // reserve days        
-        for(  int i=0; i<numberOfDays; i++ ) {
-            LocalDate tmpDate = fromDate.plusDays(1) ;
-            String dayCarType = tmpDate.format( formatter )+type ;
-            int value = 0 ;
-            if ( this.dayCarTypeCounterMap.containsKey( dayCarType)) {
-                value = this.dayCarTypeCounterMap.get(dayCarType) ;
+                // update car availability
+                this.allCarsAvailability.remove( availability ) ;
+                if ( availability.getFrom().isBefore( fromDate )) {
+                    CarAvailability newAvailability = new CarAvailability( availability.getCar(), availability.getFrom(), fromDate ) ;
+                    this.allCarsAvailability.add(newAvailability) ;
+                }
+                if ( availability.getTo().isAfter( toDate )) {
+                    CarAvailability newAvailability = new CarAvailability( availability.getCar(), toDate, availability.getTo() ) ;
+                    this.allCarsAvailability.add(newAvailability) ;
+                }
+                // make reservation
+                this.reservations.put(personId, availability.getCar() ) ;
+                result = true ;
+                break ;
             }
-            value ++ ;
         }
-
-        // add car to person
-        reservations.put( personId, type ) ;
-        return false ;
+        return result ;
     }
 
     public boolean cancelReservation( long personId ) {
         return false ;
     }
 
-    public Car rentACar( ) {
-        return null ;
+    public Car rentACar( long personId ) {
+        return reservations.get( personId ) ;
     }
 }
