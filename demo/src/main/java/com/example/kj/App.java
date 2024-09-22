@@ -1,6 +1,9 @@
 package com.example.kj;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * TASK: 
@@ -31,5 +34,8 @@ public class App {
         Car car = office.rentACar(person.getPersonId() ) ;
 
         System.out.println( String.format( "rented car type:%s registration:%s", car.getType(), car.getRegistration() )) ;
+
+
+ 
     }
 }

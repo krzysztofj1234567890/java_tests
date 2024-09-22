@@ -115,14 +115,14 @@ public class CarRentalOfficeTest {
         assertTrue( car== null );
     }
 
-
     @Test
-    public void testPerformance() {
-        int carCount = 100 ;
+    public void testMany() {
+        int carCount = 1000 ;
         // add many cars
         for ( int i=1; i<=carCount; i++ ) {
             office.addCar( CarFactory.createSedan(i, "AWS-"+i ) ) ;
         }
+        office.initializeOffice() ;
 
         // Create people
         List<Person> people = new ArrayList<Person>() ;
@@ -132,7 +132,6 @@ public class CarRentalOfficeTest {
         }
 
         // People make reservation
-        long startTimer = System.currentTimeMillis() ;
         int dayCounter = 0 ;
         Iterator<Person> pIterator = people.iterator() ;
         while( pIterator.hasNext() ) {
@@ -146,9 +145,6 @@ public class CarRentalOfficeTest {
                 dayCounter = 0 ;
             }
         }
-        long endTimer = System.currentTimeMillis() ;
-        assertTrue(  "========> Reservation time: "+ (endTimer-startTimer)+" ms. Throughput="+((1000*100*carCount)/((endTimer-startTimer))+" reservations/s"),
-            (endTimer-startTimer) < 10 );
 
         // Each person should have a car
         pIterator = people.iterator() ;

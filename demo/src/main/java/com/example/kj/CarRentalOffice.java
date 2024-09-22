@@ -3,9 +3,12 @@ package com.example.kj;
 import com.example.kj.Car.CarType;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.* ;
 
 public class CarRentalOffice {
+    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd LLLL yyyy");
+
     private List<CarAvailability> allCarsAvailability = new ArrayList<CarAvailability>() ;
     private Map<Long, Car> reservations = new HashMap<Long, Car> () ;
 
@@ -22,6 +25,13 @@ public class CarRentalOffice {
     }
 
     /**
+     * Optimize the allCarsAvailability
+     */
+    public void initializeOffice() {
+        Collections.sort( this.allCarsAvailability, new CarAvailabilitySort() ) ;
+    }
+
+    /**
      * Make a car reservation
      * @param personId
      * @param carType
@@ -35,12 +45,12 @@ public class CarRentalOffice {
         if ( reservations.containsKey( personId ) ) return false ;
 
         // can I make the reservation = find a car that is not reserved for this time period
-        // Normally this would be a SQL query: SELECT registration, fromDate, toDate FROM CarAvailability WHERE carType =? AND 
+        // Normally this would be a SQL query: SELECT registration, fromDate, toDate FROM CarAvailability WHERE carType =? AND fromDate<? AND toDate <?
         // However, I am not using a database so I just implement it
         boolean result = false ;
         LocalDate toDate = fromDate.plusDays(numberOfDays) ;
         for( CarAvailability availability : this.allCarsAvailability ) {
-            if ( availability.isAvailable(carType, fromDate, toDate)) {
+           if ( availability.isAvailable(carType, fromDate, toDate)) {
 
                 // update car availability
                 this.allCarsAvailability.remove( availability ) ;
@@ -55,6 +65,7 @@ public class CarRentalOffice {
                 // make reservation
                 this.reservations.put(personId, availability.getCar() ) ;
                 result = true ;
+
                 break ;
             }
         }
