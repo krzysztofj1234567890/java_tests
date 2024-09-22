@@ -3,12 +3,9 @@ package com.example.kj;
 import com.example.kj.Car.CarType;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.* ;
 
 public class CarRentalOffice {
-    private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-
     private List<CarAvailability> allCarsAvailability = new ArrayList<CarAvailability>() ;
     private Map<Long, Car> reservations = new HashMap<Long, Car> () ;
 
@@ -38,7 +35,8 @@ public class CarRentalOffice {
         if ( reservations.containsKey( personId ) ) return false ;
 
         // can I make the reservation = find a car that is not reserved for this time period
-        // Normally this would be a SQL query, but I am not using a database so I just implement it
+        // Normally this would be a SQL query: SELECT registration, fromDate, toDate FROM CarAvailability WHERE carType =? AND 
+        // However, I am not using a database so I just implement it
         boolean result = false ;
         LocalDate toDate = fromDate.plusDays(numberOfDays) ;
         for( CarAvailability availability : this.allCarsAvailability ) {

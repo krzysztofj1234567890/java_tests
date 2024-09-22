@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -14,6 +15,11 @@ import org.junit.Test;
  */
 public class CarRentalOfficeTest {
     private static CarRentalOffice office = new CarRentalOffice() ; 
+
+    @Before
+    public void initTest() {
+        CarRentalOfficeTest.office = new CarRentalOffice() ;
+    }
 
     @Test
     public void rentSedanVanSUV() {
@@ -70,6 +76,8 @@ public class CarRentalOfficeTest {
     @Test
     public void rentSameCarTypeSameDates() {
         office.addCar( CarFactory.createSedan(1, "sedan" ) ) ;
+        office.addCar( CarFactory.createSedan(2, "sedan" ) ) ;
+        office.addCar( CarFactory.createSedan(3, "sedan" ) ) ;
 
         // Create person
         Person personJohn = new Person( 1, "John") ;
@@ -124,26 +132,32 @@ public class CarRentalOfficeTest {
         }
 
         // People make reservation
+        long startTimer = System.currentTimeMillis() ;
         int dayCounter = 0 ;
         Iterator<Person> pIterator = people.iterator() ;
         while( pIterator.hasNext() ) {
             Person person = pIterator.next() ;
             LocalDate from = LocalDate.parse("2024-11-01").plusDays( dayCounter ) ;
-            LocalDate to = from.plusDays( 2 ) ;
-            office.makeReservation(person.getPersonId(), Car.CarType.SEDAN, LocalDate.parse("2024-11-01"), 10, 1 );
+            boolean isReservation = office.makeReservation(person.getPersonId(), Car.CarType.SEDAN, from, 10, 1 );
+            assertTrue( isReservation );
 
             dayCounter = dayCounter + 2 ;
             if ( dayCounter > 300 ) {
                 dayCounter = 0 ;
             }
         }
+        long endTimer = System.currentTimeMillis() ;
+        assertTrue(  "========> Reservation time: "+ (endTimer-startTimer)+" ms. Throughput="+((1000*100*carCount)/((endTimer-startTimer))+" reservations/s"),
+            (endTimer-startTimer) < 10 );
 
         // Each person should have a car
         pIterator = people.iterator() ;
         while( pIterator.hasNext() ) {
             Person person = pIterator.next() ;
             Car car = office.rentACar(person.getPersonId() ) ;
+            System.out.println( person.getPersonId()) ;
             assertTrue( car!= null );
         }
     }
+
 }

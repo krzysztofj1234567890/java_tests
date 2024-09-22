@@ -11,4 +11,9 @@ public class Person {
     public Long getPersonId() {
         return this.personId ;
     }
+
+    public String getName() {
+        return name;
+    }
+    
 }
