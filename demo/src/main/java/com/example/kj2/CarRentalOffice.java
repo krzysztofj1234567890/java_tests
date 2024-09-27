@@ -32,7 +32,7 @@ public class CarRentalOffice {
         // check if the person already has a reservation
         if ( reservations.containsKey( personId ) ) return reservations.get( personId ) ;
 
-         // can I make the reservation = find a car that is not reserved for this time period
+        // can I make the reservation = find a car that is not reserved for this time period
         // Normally this would be a SQL query: SELECT registration, fromDate, toDate FROM CarAvailability WHERE carType =? AND fromDate<? AND toDate <?
         // However, I am not using a database so I just implement it
         CarReservation result = null ;
