@@ -116,13 +116,15 @@ public class StreamsDemo {
 
     // How would you sort a list of strings by length?
     static void exercise8() {
+        System.out.println( "----- 8. How would you sort a list of strings by length?" );
         List<String> numbers = Arrays.asList("asdsa", "oswe", "aDw");
-        List<String>  result = numbers.stream().sorted( Comparator.comparingInt(String::length)).collect( Collectors.toList()) ;
+        List<String>  result = numbers.stream().sorted( Comparator.comparingInt(String::length)).collect( Collectors.toList()) ;;
         System.out.println(result);
     }
 
     // How can you check if all elements in a list are even?
     static void exercise9() {
+        System.out.println( "----- 9. How can you check if all elements in a list are even?" );
         List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5, 6);
         boolean  result = numbers.stream().allMatch(n -> n % 2 == 0);
         System.out.println(result);
@@ -130,6 +132,7 @@ public class StreamsDemo {
 
     // How can you find the average of a list of numbers?
     static void exercise10() {
+        System.out.println( "----- 10. How can you find the average of a list of numbers?" );
         List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5, 6);
         double  result = numbers.stream().mapToInt(Integer::intValue).average().orElse(0);
         System.out.println(result);
@@ -137,6 +140,7 @@ public class StreamsDemo {
 
     // Write a stream operation that filters out all even numbers from a list and then maps each remaining number to its square
     static void exercise11() {
+        System.out.println( "----- 11. Write a stream operation that filters out all even numbers from a list and then maps each remaining number to its square" );
         List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5, 6);
         List<Integer> result = numbers.stream().filter( c -> c %2 == 0).map( a -> a*a ).collect( Collectors.toList()) ;
         System.out.println(result);
@@ -144,6 +148,7 @@ public class StreamsDemo {
 
     // Group by the name + Count or Sum the Qty.
     static void exercise12() {
+        System.out.println( "----- 12. Group by the name + Count or Sum the Qty" );
         //3 apple, 2 banana, others 1
         List<Item> items = Arrays.asList(
                 new Item("apple", 10, new BigDecimal("9.99")),
