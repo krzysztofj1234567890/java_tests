@@ -34,7 +34,8 @@ public class CarRentalOffice {
         if ( reservations.containsKey( personId ) ) return reservations.get( personId ) ;
         
         // can I make the reservation = find a car that is not reserved for this time period
-        // Normally this would be a SQL query: SELECT registration, fromDate, toDate FROM CarAvailability WHERE carType =? AND fromDate<? AND toDate <?
+        // Normally this would be a SQL query: 
+        // SELECT registration, fromDate, toDate FROM CarAvailability WHERE carType =? AND fromDate>? AND toDate <? AND availability = True
         // However, I am not using a database so I will just implement it
         CarReservation result = null ;
         for( CarAvailability availability : this.allCarsAvailability ) {
@@ -65,5 +66,9 @@ public class CarRentalOffice {
 
     public CarReservation rentACar( long personId ) {
         return reservations.get( personId ) ;
+    }
+
+    public int availabilityCount() {
+        return this.allCarsAvailability.size() ;
     }
 }

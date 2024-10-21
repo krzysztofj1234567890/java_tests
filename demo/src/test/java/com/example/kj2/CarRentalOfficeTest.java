@@ -166,6 +166,9 @@ public class CarRentalOfficeTest {
         LocalTime time = LocalTime.now().withHour(10).withMinute(0).withSecond(0) ;
         int dayCounter = 0 ;
         Iterator<Person> pIterator = people.iterator() ;
+
+        // timer
+        long startTimer = System.currentTimeMillis() ;
         while( pIterator.hasNext() ) {
             Person person = pIterator.next() ;
             LocalDate from = LocalDate.now().plusDays( 10 ).plusDays( dayCounter ) ;
@@ -177,6 +180,9 @@ public class CarRentalOfficeTest {
                 dayCounter = 0 ;
             }
         }
+        long endTimer = System.currentTimeMillis() ;
+        System.out.println( "Time spent to make reservations for "+carCount+" cars * 100 people:"+(endTimer-startTimer)+"ms" ) ;
+        System.out.println( "Availability size:"+office.availabilityCount() ) ;
 
         // Each person should have a car
         pIterator = people.iterator() ;
