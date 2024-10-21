@@ -31,13 +31,13 @@ public class CarRentalOffice {
 
         // check if the person already has a reservation
         if ( reservations.containsKey( personId ) ) return reservations.get( personId ) ;
-
+        
         // can I make the reservation = find a car that is not reserved for this time period
         // Normally this would be a SQL query: SELECT registration, fromDate, toDate FROM CarAvailability WHERE carType =? AND fromDate<? AND toDate <?
         // However, I am not using a database so I just implement it
         CarReservation result = null ;
         for( CarAvailability availability : this.allCarsAvailability ) {
-           if ( availability.isAvailable(carType, newFrom, newTo)) {
+            if ( availability.isAvailable(carType, newFrom, newTo)) {
 
                 // update car availability
                 this.allCarsAvailability.remove( availability ) ;
@@ -52,6 +52,7 @@ public class CarRentalOffice {
                 // make reservation
                 result = new CarReservation( availability.getCar(), personId ) ;
                 this.reservations.put(personId, result ) ;
+
                 break ;
             }
         }

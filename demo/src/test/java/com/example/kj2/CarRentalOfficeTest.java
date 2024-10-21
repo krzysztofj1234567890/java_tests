@@ -34,10 +34,11 @@ public class CarRentalOfficeTest {
         Person personKate = new Person( 3, "Kate") ;
 
         // Person makes reservation
+        LocalDate dateFrom = LocalDate.now().plusDays( 10 ) ;
         LocalTime time = LocalTime.now().withHour(10).withMinute(0).withSecond(0) ;
-        office.makeReservation(personJohn.getPersonId(), Car.CarType.SEDAN, LocalDate.parse("2024-10-04"), time, 5 );
-        office.makeReservation(personAdam.getPersonId(), Car.CarType.SUV, LocalDate.parse("2024-10-04"), time, 5 );
-        office.makeReservation(personKate.getPersonId(), Car.CarType.VAN, LocalDate.parse("2024-10-04"), time, 5 );
+        office.makeReservation(personJohn.getPersonId(), Car.CarType.SEDAN, dateFrom, time, 5 );
+        office.makeReservation(personAdam.getPersonId(), Car.CarType.SUV, dateFrom, time, 5 );
+        office.makeReservation(personKate.getPersonId(), Car.CarType.VAN, dateFrom, time, 5 );
 
         // Person rents a car
         CarReservation car1 = office.rentACar(personJohn.getPersonId() ) ;
@@ -48,6 +49,7 @@ public class CarRentalOfficeTest {
 
         CarReservation car3 = office.rentACar(personKate.getPersonId() ) ;
         assertTrue( car3!= null );
+        
     }
 
     @Test
@@ -60,10 +62,13 @@ public class CarRentalOfficeTest {
         Person personKate = new Person( 3, "Kate") ;
 
         // Person makes reservation
+        LocalDate dateFrom1 = LocalDate.now().plusDays( 10 ) ;
+        LocalDate dateFrom2 = LocalDate.now().plusDays( 20 ) ;
+        LocalDate dateFrom3 = LocalDate.now().plusDays( 30 ) ;
         LocalTime time = LocalTime.now().withHour(10).withMinute(0).withSecond(0) ;
-        office.makeReservation(personJohn.getPersonId(), Car.CarType.SEDAN, LocalDate.parse("2024-11-01"), time, 5 );
-        office.makeReservation(personAdam.getPersonId(), Car.CarType.SEDAN, LocalDate.parse("2024-11-10"), time, 5 );
-        office.makeReservation(personKate.getPersonId(), Car.CarType.SEDAN, LocalDate.parse("2024-11-20"), time, 5 );
+        office.makeReservation(personJohn.getPersonId(), Car.CarType.SEDAN, dateFrom1, time, 5 );
+        office.makeReservation(personAdam.getPersonId(), Car.CarType.SEDAN, dateFrom2, time, 5 );
+        office.makeReservation(personKate.getPersonId(), Car.CarType.SEDAN, dateFrom3, time, 5 );
 
         // Person rents a car
         CarReservation car1 = office.rentACar(personJohn.getPersonId() ) ;
@@ -88,10 +93,11 @@ public class CarRentalOfficeTest {
         Person personKate = new Person( 3, "Kate") ;
 
         // Person makes reservation
+        LocalDate dateFrom = LocalDate.now().plusDays( 10 ) ;
         LocalTime time = LocalTime.now().withHour(10).withMinute(0).withSecond(0) ;
-        office.makeReservation(personJohn.getPersonId(), Car.CarType.SEDAN, LocalDate.parse("2024-11-01"), time, 5 );
-        office.makeReservation(personAdam.getPersonId(), Car.CarType.SEDAN, LocalDate.parse("2024-11-01"), time, 5 );
-        office.makeReservation(personKate.getPersonId(), Car.CarType.SEDAN, LocalDate.parse("2024-11-01"), time, 5 );
+        office.makeReservation(personJohn.getPersonId(), Car.CarType.SEDAN, dateFrom, time, 5 );
+        office.makeReservation(personAdam.getPersonId(), Car.CarType.SEDAN, dateFrom, time, 5 );
+        office.makeReservation(personKate.getPersonId(), Car.CarType.SEDAN, dateFrom, time, 5 );
 
         // Person rents a car
         CarReservation car1 = office.rentACar(personJohn.getPersonId() ) ;
@@ -115,10 +121,11 @@ public class CarRentalOfficeTest {
         Person personKate = new Person( 3, "Kate") ;
 
         // Person makes reservation
+        LocalDate dateFrom = LocalDate.now().plusDays( 10 ) ;
         LocalTime time = LocalTime.now().withHour(10).withMinute(0).withSecond(0) ;
-        office.makeReservation(personJohn.getPersonId(), Car.CarType.SEDAN, LocalDate.parse("2024-11-01"), time, 5 );
-        office.makeReservation(personAdam.getPersonId(), Car.CarType.SEDAN, LocalDate.parse("2024-11-01"), time, 5 );
-        CarReservation reservation = office.makeReservation(personKate.getPersonId(), Car.CarType.SEDAN, LocalDate.parse("2024-11-01"), time, 5 );
+        office.makeReservation(personJohn.getPersonId(), Car.CarType.SEDAN, dateFrom, time, 5 );
+        office.makeReservation(personAdam.getPersonId(), Car.CarType.SEDAN, dateFrom, time, 5 );
+        CarReservation reservation = office.makeReservation(personKate.getPersonId(), Car.CarType.SEDAN, dateFrom, time, 5 );
 
         assertTrue( reservation == null );
     }
@@ -131,8 +138,9 @@ public class CarRentalOfficeTest {
         Person person = new Person( 1, "John") ;
 
         // Person makes reservation
+        LocalDate dateFrom = LocalDate.now().plusDays( 10 ) ;
         LocalTime time = LocalTime.now().withHour(10).withMinute(0).withSecond(0) ;
-        office.makeReservation(person.getPersonId(), Car.CarType.VAN, LocalDate.parse("2024-10-04"), time, 5 );
+        office.makeReservation(person.getPersonId(), Car.CarType.VAN, dateFrom, time, 5 );
 
         // Person rents a car
         CarReservation car = office.rentACar(person.getPersonId() ) ;
@@ -160,7 +168,7 @@ public class CarRentalOfficeTest {
         Iterator<Person> pIterator = people.iterator() ;
         while( pIterator.hasNext() ) {
             Person person = pIterator.next() ;
-            LocalDate from = LocalDate.parse("2024-11-01").plusDays( dayCounter ) ;
+            LocalDate from = LocalDate.now().plusDays( 10 ).plusDays( dayCounter ) ;
             CarReservation reservation= office.makeReservation(person.getPersonId(), Car.CarType.SEDAN, from, time, 1 );
             assertTrue( reservation != null);
 
