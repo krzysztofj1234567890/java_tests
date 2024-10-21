@@ -183,7 +183,7 @@ public class CarRentalOfficeTest {
         while( pIterator.hasNext() ) {
             Person person = pIterator.next() ;
             CarReservation car = office.rentACar(person.getPersonId() ) ;
- //           System.out.println( person.getPersonId()) ;
+//            System.out.println( person.getPersonId()) ;
             assertTrue( car!= null );
         }
     }

@@ -21,6 +21,7 @@ public class CarRentalOffice {
         this.allCarsAvailability.add( new CarAvailability( car, from, to ) ) ;
     }
     public CarReservation makeReservation( Long personId, Car.CarType carType, LocalDate from, LocalTime time, int numberOdDays) {
+        // create from and to DateTime
         LocalDateTime newFrom = LocalDateTime.now().withYear(from.getYear())
             .withMonth( from.getMonthValue())
             .withDayOfMonth( from.getDayOfMonth())
@@ -34,22 +35,25 @@ public class CarRentalOffice {
         
         // can I make the reservation = find a car that is not reserved for this time period
         // Normally this would be a SQL query: SELECT registration, fromDate, toDate FROM CarAvailability WHERE carType =? AND fromDate<? AND toDate <?
-        // However, I am not using a database so I just implement it
+        // However, I am not using a database so I will just implement it
         CarReservation result = null ;
         for( CarAvailability availability : this.allCarsAvailability ) {
             if ( availability.isAvailable(carType, newFrom, newTo)) {
 
                 // update car availability
+                // remove existing availability
                 this.allCarsAvailability.remove( availability ) ;
+                // create new availability that starts from old start availability and ends with new From
                 if ( availability.getFrom().isBefore( newFrom )) {
                     CarAvailability newAvailability = new CarAvailability( availability.getCar(), availability.getFrom(), newFrom ) ;
                     this.allCarsAvailability.add(newAvailability) ;
                 }
+                // create new availability that starts from newTo and ends with old end availability
                 if ( availability.getTo().isAfter( newTo )) {
                     CarAvailability newAvailability = new CarAvailability( availability.getCar(), newTo, availability.getTo() ) ;
                     this.allCarsAvailability.add(newAvailability) ;
                 }
-                // make reservation
+                // make new reservation
                 result = new CarReservation( availability.getCar(), personId ) ;
                 this.reservations.put(personId, result ) ;
 
