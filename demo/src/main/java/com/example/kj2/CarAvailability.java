@@ -2,7 +2,7 @@ package com.example.kj2;
 import java.time.LocalDateTime;
 
 import com.example.kj2.Car.CarType;
-public class CarAvailability {
+public class CarAvailability implements Comparable<CarAvailability>{
     private Car car ;
     private LocalDateTime from ;
     private LocalDateTime to ;
@@ -26,6 +26,22 @@ public class CarAvailability {
             return false ;
         } else {
             return true ;
+        }
+    }
+    @Override
+    public int compareTo(CarAvailability o) {
+        if ( this.from.isBefore( o.from) ) {
+            return 1 ;
+        } else if ( this.from.isAfter( o.from)) {
+            return -1 ;
+        } else {
+            if ( this.to.isBefore( o.to) ) {
+                return 1 ;
+            } else if ( this.to.isAfter( o.to) ) {
+                return -1 ;
+            } else {
+                return this.car.getCarId().compareTo( o.car.getCarId() ) ;
+            }
         }
     }
 

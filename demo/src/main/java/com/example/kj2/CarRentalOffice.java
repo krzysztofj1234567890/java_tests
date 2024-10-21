@@ -8,7 +8,7 @@ import java.util.* ;
 
 public class CarRentalOffice {
     // availability of all cars
-    private List<CarAvailability> allCarsAvailability = new ArrayList<CarAvailability>() ;
+    private Set<CarAvailability> allCarsAvailability = new TreeSet<CarAvailability>() ;
 
     // key is personId and value is CarSeservation
     private Map<Long, CarReservation> reservations = new HashMap<Long, CarReservation> () ;
