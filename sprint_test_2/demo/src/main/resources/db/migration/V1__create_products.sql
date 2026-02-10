@@ -1,0 +1,6 @@
+CREATE TABLE products (
+  id UUID PRIMARY KEY,
+  name TEXT NOT NULL,
+  price NUMERIC(10,2) NOT NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT now()
+);
