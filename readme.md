@@ -42,6 +42,13 @@ curl -X POST http://localhost:8080/api/products -H "Content-Type: application/js
 curl http://localhost:8080/api/products
 ```
 
+test actuator
+```
+http://localhost:8080/actuator/health
+http://localhost:8080/actuator/health/liveness
+
+```
+
 ## create and run Postgresql container database
 
 1. start Docker Desktop

@@ -14,4 +14,19 @@ spring:
         format_sql: true
   flyway:
     enabled: true
-
+  web:
+    resources:
+      add-mappings: false 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: when_authorized
+info:
+  app:
+    name: product-service
+    version: 1.0.0
+    description: Product management API
